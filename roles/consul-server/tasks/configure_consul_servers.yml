@@ -9,7 +9,7 @@
       group: root
       mode: 0777
       with_items:
-        - "{ src: "server.json.j2", dest: "{{ consul_config_dir }}/server.json" }
+        - "{ "server.json.j2", "{{ consul_config_dir }}/server.json" }
 
 - name: Copy the Consul Setup Script onto the server
   template:
