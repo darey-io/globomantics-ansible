@@ -20,7 +20,7 @@
       mode: 0777
 
 
-- name: Start Consul Post KV Data
+- name: Start Consul 
   shell: "{{ consul_opt_dir }}/setup-consul-server.sh"
   args:
     chdir: "{{ consul_opt_dir }}"
