@@ -2,4 +2,4 @@
 # tasks file for consul-server
 
 - name: Build Consul Servers.
-  include: configure_consul_servers.yml
+  include: configure_consul_agent.yml
