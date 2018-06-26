@@ -27,7 +27,7 @@
       dest: "{{ item }}"
       owner: root
       group: root
-      mode: 0700
+      mode: 0777
       with_items:
-        - "{ "common.json.j2", "{{ consul_config_dir }}/common.json" }
+        - { "common.json.j2", "{{ consul_config_dir }}/common.json" }
 
