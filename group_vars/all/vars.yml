@@ -1,0 +1,7 @@
+# INFRASTRUCTURE
+# Configuration directory for Consul
+consul_config_dir: /etc/consul.d
+consul_opt_dir: /opt/consul
+consul_data_dir: /opt/consul/data
+
+dc: "london"
