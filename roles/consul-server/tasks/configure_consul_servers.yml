@@ -19,7 +19,7 @@
 
 # TODO: Allow Ansible to manage this task
 - name: Start Consul 
-  shell: "/etc/consul.d/setup-consul-server.sh"
+  shell: "/etc/consul/setup-consul-server.sh"
   args:
     chdir: "/opt/consul"
     creates: consul-server-configured.done
