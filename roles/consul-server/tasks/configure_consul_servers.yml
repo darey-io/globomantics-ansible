@@ -3,13 +3,13 @@
 
 - name: Setup the Consul Server Configuration
   template:
-      src: "{{ item }}"
-      dest: "{{ item }}"
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
       owner: root
       group: root
       mode: 0777
       with_items:
-        - { "server.json.j2", "{{ consul_config_dir }}/server.json" }
+        - { src: "server.json.j2", dest: "{{ consul_config_dir }}/server.json" }
 
 - name: Copy the Consul Setup Script onto the server
   template:
