@@ -23,11 +23,11 @@
 
 - name: Setup the Common json configurations
   template:
-      src: "{{ item }}"
-      dest: "{{ item }}"
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
       owner: root
       group: root
       mode: 0775
       with_items:
-        - { "common.json.j2", "{{ consul_config_dir }}/common.json" }
+        - { src: "common.json.j2", dest: "{{ consul_config_dir }}/common.json" }
 
