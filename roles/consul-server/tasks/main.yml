@@ -1,0 +1,5 @@
+---
+# tasks file for consul-server
+
+- name: Build Consul Servers.
+  include: configure_consul_servers.yml

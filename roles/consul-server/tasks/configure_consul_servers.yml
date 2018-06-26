@@ -1,0 +1,27 @@
+---
+# tasks file for building consul-server
+
+- name: Setup the Consul Server Configuration
+  template:
+      src: "{{ item }}"
+      dest: "{{ item }}"
+      owner: root
+      group: root
+      mode: 0777
+      with_items:
+        - "{{ "server.json.j2", "{{ consul_config_dir }}/server.json" }}"
+
+- name: Copy the Consul Setup Script onto the server
+  template:
+      src: "setup-consul-server.sh.j2"
+      dest: "{{ consul_opt_dir }}/setup-consul-server.sh"
+      owner: root
+      group: root
+      mode: 0777
+
+
+- name: Start Consul Post KV Data
+  shell: "{{ consul_opt_dir }}/setup-consul-server.sh"
+  args:
+    chdir: "{{ consul_opt_dir }}"
+    creates: consul-server-configured.done

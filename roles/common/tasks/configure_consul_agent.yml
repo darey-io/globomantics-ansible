@@ -1,0 +1,32 @@
+---
+# tasks file for building consul-server
+- name: Create common directories across the infrastructure
+  file:
+    path: {{ item }}
+    state: directory
+    owner: consul
+    group: consul
+    mode: 0775
+    with_items:
+      - "{{ consul_config_dir }}"
+      - "{{ opt_dir }}"
+      - "{{ consul_data_dir }}"
+
+# TODO: use systemd instead of init
+- name: Setup the Upstart Job
+  template:
+      src: "upstart_consul.conf.j2"
+      dest: "/etc/init/"
+      owner: root
+      group: root
+      mode: 0700
+
+- name: Setup the Common json configurations
+  template:
+      src: "{{ item }}"
+      dest: "{{ item }}"
+      owner: root
+      group: root
+      mode: 0700
+      with_items:
+        - "{{ "common.json.j2", ""{{ consul_config_dir }}"/common.json" }}"
