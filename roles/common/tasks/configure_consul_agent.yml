@@ -7,10 +7,10 @@
     owner: root
     group: root
     mode: 0775
-    with_items:
-      - "/etc/consul.d"
-      - "/opt/consul"
-      - "/opt/consul/data"
+  with_items:
+    - "/etc/consul.d"
+    - "/opt/consul"
+    - "/opt/consul/data"
 
 # TODO: use systemd instead of init
 - name: Setup the Upstart Job
