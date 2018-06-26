@@ -3,25 +3,23 @@
 
 - name: Setup the Consul Server Configuration
   template:
-      src: "{{ item.src }}"
-      dest: "{{ item.dest }}"
+      src: "server.json.j2"
+      dest: "/etc/consul.d/server.json"
       owner: root
       group: root
       mode: 0777
-      with_items:
-        - { src: "server.json.j2", dest: "{{ consul_config_dir }}/server.json" }
 
 - name: Copy the Consul Setup Script onto the server
   template:
       src: "setup-consul-server.sh.j2"
-      dest: "{{ consul_opt_dir }}/setup-consul-server.sh"
+      dest: "/opt/consul/setup-consul-server.sh"
       owner: root
       group: root
       mode: 0777
 
 # TODO: Allow Ansible to manage this task
 - name: Start Consul 
-  shell: "{{ consul_opt_dir }}/setup-consul-server.sh"
+  shell: "/etc/consul.d/setup-consul-server.sh"
   args:
-    chdir: "{{ consul_opt_dir }}"
+    chdir: "/opt/consul"
     creates: consul-server-configured.done
