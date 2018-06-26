@@ -19,7 +19,7 @@
       group: root
       mode: 0777
 
-
+# TODO: Allow Ansible to manage this task
 - name: Start Consul 
   shell: "{{ consul_opt_dir }}/setup-consul-server.sh"
   args:
