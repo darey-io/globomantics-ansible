@@ -4,13 +4,13 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: consul
-    group: consul
+    owner: root
+    group: root
     mode: 0775
     with_items:
-      - "{{ consul_config_dir }}"
-      - "{{ consul_opt_dir }}"
-      - "{{ consul_data_dir }}"
+      - "/etc/consul.d"
+      - "/opt/consul"
+      - "/opt/consul/data"
 
 # TODO: use systemd instead of init
 - name: Setup the Upstart Job
@@ -23,11 +23,10 @@
 
 - name: Setup the Common json configurations
   template:
-      src: "{{ item.src }}"
-      dest: "{{ item.dest }}"
+      src: "common.json.j2"
+      dest: "/etc/consul.d/common.json"
       owner: root
       group: root
       mode: 0775
-      with_items:
-        - { src: "common.json.j2", dest: "{{ consul_config_dir }}/common.json" }
+     
 
