@@ -9,7 +9,7 @@
     mode: 0775
     with_items:
       - "{{ consul_config_dir }}"
-      - "{{ opt_dir }}"
+      - "{{ consul_opt_dir }}"
       - "{{ consul_data_dir }}"
 
 # TODO: use systemd instead of init
