@@ -1,5 +1,4 @@
 ---
 # defaults file for consul-server
 
-consul_config_dir: /etc/consul.d
-consul_opt_dir: /opt/consul
+
