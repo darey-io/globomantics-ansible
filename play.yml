@@ -1,0 +1,7 @@
+---
+- hosts: consul
+  gather_facts: yes
+  become: yes
+  roles:
+   - consul-server
+   - common
