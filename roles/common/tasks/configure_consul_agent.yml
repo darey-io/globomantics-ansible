@@ -16,7 +16,7 @@
 - name: Setup the Upstart Job
   template:
       src: "upstart_consul.conf.j2"
-      dest: "/etc/init/"
+      dest: "/etc/init/upstart_consul.conf"
       owner: root
       group: root
       mode: 0700
