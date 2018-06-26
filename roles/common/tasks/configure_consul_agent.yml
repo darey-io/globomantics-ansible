@@ -2,7 +2,7 @@
 # tasks file for building consul-server
 - name: Create common directories across the infrastructure
   file:
-    path: {{ item }}
+    path: "{{ item }}"
     state: directory
     owner: consul
     group: consul
