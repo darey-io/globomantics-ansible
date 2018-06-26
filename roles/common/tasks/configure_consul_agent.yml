@@ -29,4 +29,5 @@
       group: root
       mode: 0700
       with_items:
-        - "{{ "common.json.j2", ""{{ consul_config_dir }}"/common.json" }}"
+        - "{ src: "common.json.j2", dest: "{{ consul_config_dir }}/common.json" }
+
