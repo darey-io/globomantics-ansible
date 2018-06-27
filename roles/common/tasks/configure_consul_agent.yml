@@ -28,3 +28,4 @@
       owner: root
       group: root
       mode: 0775
+  notify: Start the consul service
