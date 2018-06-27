@@ -1,2 +1,10 @@
 ---
 # handlers file for common
+
+
+- name: Start the consul service
+  service:
+    name: consul
+    state: started
+    enabled: yes
+  become: yes
