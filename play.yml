@@ -4,4 +4,5 @@
   become: yes
   roles:
    - common
-   - consul-server
+   # - consul-server
+   - elasticsearch

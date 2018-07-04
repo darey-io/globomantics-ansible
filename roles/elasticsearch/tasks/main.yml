@@ -1,0 +1,5 @@
+---
+# tasks file for elasticsearch-client
+
+- name: Configure Elasticsearch.
+  include: configure_es.yml

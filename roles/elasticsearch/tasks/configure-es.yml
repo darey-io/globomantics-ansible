@@ -1,0 +1,14 @@
+- name: Deploy Elastic search configuration on respective nodes
+  template:
+      src: "elasticsearch.yml.j2"
+      dest: "/etc/elasticsearch/elasticsearch.yml"
+      owner: root
+      group: elasticsearch
+      mode: 0660
+
+
+- name: start and enable elasticsearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes

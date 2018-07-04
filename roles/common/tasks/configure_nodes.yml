@@ -1,0 +1,38 @@
+---
+
+- name: update host files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+    - { src: "hosts.j2", dest: "/etc/hosts"}
+
+- name: disable SELinux
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Allow sudo without tty
+  lineinfile:
+    backrefs: yes
+    dest: /etc/sudoers
+    regexp: "^Defaults(.*)requiretty"
+    line: "Defaults    !requiretty"
+    state: present
+    validate: 'visudo -cf %s'
+  tags: sudotty
+
+
+- name: configure O/S ports / TCP buffers / swappiness
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+    - { src: "limits.conf.j2", dest: "/etc/security/limits.conf"}
+    - { src: "sysctl.j2", dest: "/etc/sysctl.conf" }
