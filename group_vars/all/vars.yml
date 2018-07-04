@@ -1,7 +1,16 @@
-# INFRASTRUCTURE
-# Configuration directory for Consul
+# Infrastructure
+dc: "london"
+env: dev #Specify Environment as required. "prod" "sit" "uat" etc...
+
+# Consul
 consul_config_dir: /etc/consul.d
 consul_opt_dir: /opt/consul
 consul_data_dir: /opt/consul/data
 
-dc: "london"
+# Elasticsearch
+es_cluster_name: {{ env }}-gl
+es_data_dir: /data/elasticsearch
+es_minimum_master_nodes: 2
+es_gateway_recover_after_nodes: 6 # total number of nodes - 1. Including the client nodes)
+es_gateway.expected_nodes: 7 # How many nodes should be in the cluster in total
+es_gateway.recover_after_time: 5m # How long should the cluster wait for all nodes to start up

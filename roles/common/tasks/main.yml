@@ -1,5 +1,8 @@
 ---
 # tasks file for consul-server
 
-- name: Build Consul Servers.
-  include: configure_consul_agent.yml
+- name: Tune the OS
+  include: configure_nodes.yml
+
+# - name: Configure Consul Agents.
+#   include: configure_consul_agent.yml
