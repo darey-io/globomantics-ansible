@@ -10,10 +10,11 @@
   with_items:
     - { src: "hosts.j2", dest: "/etc/hosts"}
 
-- name: disable SELinux
-  selinux:
-    policy: targeted
-    state: permissive
+# libselinux-python required 
+# - name: disable SELinux
+#   selinux:
+#     policy: targeted
+#     state: permissive
 
 - name: Allow sudo without tty
   lineinfile:
