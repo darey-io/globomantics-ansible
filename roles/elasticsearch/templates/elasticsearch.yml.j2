@@ -96,8 +96,8 @@ discovery.zen.minimum_master_nodes: "{{ es_minimum_master_nodes }}"
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
 gateway.recover_after_nodes: "{{ es_gateway_recover_after_nodes }}"
-gateway.expected_nodes: "{{ es_gateway.expected_nodes }}"
-gateway.recover_after_time: "{{ es_gateway.recover_after_time }}"
+gateway.expected_nodes: "{{ es_gateway_expected_nodes }}"
+gateway.recover_after_time: "{{ es_gateway_recover_after_time }}"
 
 #
 # For more information, consult the gateway module documentation.

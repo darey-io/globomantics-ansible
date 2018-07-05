@@ -1,5 +1,5 @@
 ---
-- hosts: consul
+- hosts: all
   gather_facts: yes
   become: yes
   roles:
