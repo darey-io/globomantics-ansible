@@ -4,7 +4,7 @@ Requires=network-online.target
 After=network-online.target
 
 [Service]
-WorkingDirectory={{ es_head_dir }}
+WorkingDirectory={{ es_head_dir }}/
 AmbientCapabilities=CAP_SYS_RAWIO
 Environment=GOMAXPROCS=2
 Restart=always
