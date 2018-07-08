@@ -3,6 +3,6 @@
   gather_facts: yes
   become: yes
   roles:
-   - common
+   # - common
    # - consul-server
    - elasticsearch
