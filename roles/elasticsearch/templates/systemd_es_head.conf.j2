@@ -1,0 +1,23 @@
+[Unit]
+Description=Web UI for elasticsearch cluster
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+WorkingDirectory={{ es_head_dir }}
+AmbientCapabilities=CAP_SYS_RAWIO
+Environment=GOMAXPROCS=2
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=notell
+ExecStart=/usr/bin/npm run start
+User=root
+Group=root
+Environment=NODE_ENV="{{ env }}"
+
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target

@@ -28,11 +28,10 @@ node.data: false
 {% elif 'workers' in group_names %}
 node.data: true
 node.master: false
-node.client: false
-http.enables: false
+http.enabled: false
 {% else %}
-node.client: true
 node.data: false
+node.master: false
 {% endif %}
 #
 # Add custom attributes to the node:
@@ -69,11 +68,11 @@ path.data: "{{ es_data_dir }}"
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-#network.host: 192.168.0.1
+network.host: {{ ansible_all_ipv4_addresses[0] }}
 #
 # Set a custom port for HTTP:
 #
-#http.port: 9200
+http.port: 9200
 #
 # For more information, consult the network module documentation.
 #
@@ -82,8 +81,9 @@ path.data: "{{ es_data_dir }}"
 # Pass an initial list of hosts to perform discovery when new node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
-discovery.zen.ping.unicast.hosts: ["{{groups['all']|join(',')}}"]
-discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: ["london-masternode1","london-masternode2","london-masternode3","london-workernode1","london-workernode2","london-workernode3","london-client"]
+
+# ["{{groups['all']|join(',')}}"]
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
@@ -103,7 +103,23 @@ gateway.recover_after_time: "{{ es_gateway_recover_after_time }}"
 # For more information, consult the gateway module documentation.
 #
 # ---------------------------------- Various -----------------------------------
-#
+http.cors.enabled: true
+http.cors.allow-origin: /http://{% if 'client' in group_names %}{{ ansible_all_ipv4_addresses[0] }}(:[0-9]+)?/
+{% endif %} #Allow CORS only from the Client Machine
+# Output Example /http://172.20.20.11(:[0-9]+)?/
+http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
+http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
+# This  configuration is considered as a security risk as your cluster is open to cross origin from anywhere. This needs to be fixed ASAP. (Consider a value like /https?:\/\/localhost(:[0-9]+)?/)
+{# http.cors.allow-headers: Authorization #}
+
+# X Pack
+{# action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*
+xpack.security.enabled: true
+xpack.graph.enabled: true
+xpack.ml.enabled: true
+xpack.monitoring.enabled: true
+xpack.watcher.enabled: true
+xpack.security.authc.accept_default_password: true #}
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true

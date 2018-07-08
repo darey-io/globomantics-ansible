@@ -1,3 +1,13 @@
+- name: Create directories for Elasticsearch
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0774
+  with_items:
+    - "{{ es_data_dir }}"
+
 - name: Deploy Elastic search configuration on respective nodes
   template:
       src: "elasticsearch.yml.j2"
@@ -5,6 +15,7 @@
       owner: root
       group: elasticsearch
       mode: 0660
+  notify: restart elasticsearch
 
 
 - name: start and enable elasticsearch

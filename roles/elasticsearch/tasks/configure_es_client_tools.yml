@@ -1,0 +1,46 @@
+- name: Elastic Search Head | Get the Web Application
+  git:
+    repo: 'https://github.com/mobz/elasticsearch-head.git'
+    dest: "{{ es_head_dir }}"
+  when: "'client' in group_names"
+
+- name: Node.js | Get script
+  get_url:
+    url: "http://deb.nodesource.com/setup_6.x"
+    dest: "{{ es_head_dir }}/nodejs.sh"
+  when: "'client' in group_names"
+
+- name: Node.js | Set execution right to script
+  file:
+    path: "{{ es_head_dir }}/nodejs.sh"
+    mode: "u+x"
+  when: "'client' in group_names"
+
+- name: Node.js | Execute installation script
+  shell: "{{ es_head_dir }}/nodejs.sh && touch {{ es_head_dir }}/nodejs.sh.done"
+  args:
+    creates: "{{ es_head_dir }}/nodejs.sh.done"
+  when: "'client' in group_names"
+
+- name: Node.js | Install Node.js
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - build-essential
+    - nodejs
+  when: "'client' in group_names"
+
+- name: Install ES Head
+  shell: "npm install && touch {{ es_head_dir }}/es_head_install.done"
+  args:
+    chdir: "{{ es_head_dir }}"
+    creates: "{{ es_head_dir }}/es_head_install.done"
+  when: "'client' in group_names"
+
+- name: Setup systemd service for Elasticsearch Head
+  template:
+      src: "systemd_es_head.conf.j2"
+      dest: "/etc/systemd/system/eshead.service"
+      owner: root
+      group: root
+      mode: 0700
+  notify: retart ES Head service
