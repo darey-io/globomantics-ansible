@@ -4,5 +4,5 @@
 - name: Configure Elasticsearch.
   include: configure_es.yml
 
-- name: Configure Elasticsearch.
+- name: Configure Elasticsearch Client Resources
   include: configure_es_client_tools.yml

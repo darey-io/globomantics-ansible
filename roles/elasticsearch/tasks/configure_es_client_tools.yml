@@ -43,4 +43,5 @@
       owner: root
       group: root
       mode: 0700
-  notify: retart ES Head service
+  notify: Start ES Head service
+  when: "'client' in group_names"

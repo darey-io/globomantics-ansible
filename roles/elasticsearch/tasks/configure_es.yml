@@ -15,10 +15,10 @@
       owner: root
       group: elasticsearch
       mode: 0660
-  notify: restart elasticsearch
+  notify: Restart ES service # This should be removed when we introduce Consul Templates
 
 
-- name: start and enable elasticsearch
+- name: Enable and Start elasticsearch
   service:
     name: elasticsearch
     state: started

@@ -8,18 +8,5 @@
       owner: root
       group: root
       mode: 0777
-
-- name: Copy the Consul Setup Script onto the server
-  template:
-      src: "setup-consul-server.sh.j2"
-      dest: "/opt/consul/setup-consul-server.sh"
-      owner: root
-      group: root
-      mode: 0777
-
-# TODO: Allow Ansible to manage this task
-- name: Start Consul 
-  shell: sudo service consul start
-  args:
-    chdir: "/opt/consul"
-    creates: consul-server-configured.done
+  when: "'masters' in group_names"
+  notify: Start the consul service

@@ -1,17 +1,5 @@
 ---
 # tasks file for building consul-server
-- name: Create common directories across the infrastructure
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0777
-  with_items:
-    - "/etc/consul.d"
-    - "/opt/consul"
-    - "/opt/consul/data"
-
 
 - name: Setup systemd service for consul
   template:
@@ -23,7 +11,7 @@
 
 - name: Setup the Common json configurations
   template:
-      src: "common.json.j2"
+      src: "consul_common.json.j2"
       dest: "/etc/consul.d/common.json"
       owner: root
       group: root

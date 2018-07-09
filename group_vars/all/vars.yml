@@ -1,5 +1,5 @@
 # Infrastructure
-dc: "london"
+dc: "usa"
 env: dev #Specify Environment as required. "prod" "sit" "uat" etc...
 
 # Consul
@@ -8,11 +8,11 @@ consul_opt_dir: /opt/consul
 consul_data_dir: /opt/consul/data
 
 # Elasticsearch
-es_cluster_name: "{{ env }}-gl"
+es_cluster_name: "{{ env }}-es-usa"
 es_data_dir: /data/elasticsearch
 es_head_dir: /opt/elasticsearch/elasticsearch-head
 es_minimum_master_nodes: 2
-es_gateway_recover_after_nodes: 6 # total number of nodes - 1. Including the client nodes)
-es_gateway_expected_nodes: 7 # How many nodes should be in the cluster in total
+es_gateway_recover_after_nodes: 5 # total number of nodes - 1. Including the client nodes)
+es_gateway_expected_nodes: 6 # How many nodes should be in the cluster in total
 es_gateway_recover_after_time: 5m # How long should the cluster wait for all nodes to start up
-node_version: 6.14.3
+# node_version: 6.14.3

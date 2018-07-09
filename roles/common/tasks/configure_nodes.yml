@@ -1,5 +1,17 @@
 ---
 
+- name: Create common directories across the infrastructure
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  with_items:
+    - "/etc/consul.d"
+    - "/opt/consul"
+    - "/opt/consul/data"
+    
 - name: update host files
   template:
     src: "{{ item.src }}"
@@ -10,7 +22,7 @@
   with_items:
     - { src: "hosts.j2", dest: "/etc/hosts"}
 
-# libselinux-python required 
+# libselinux-python required
 # - name: disable SELinux
 #   selinux:
 #     policy: targeted

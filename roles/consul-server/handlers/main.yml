@@ -1,2 +1,9 @@
 ---
 # handlers file for consul-server
+
+- name: Start the consul service
+  service:
+    name: consul
+    state: started
+    enabled: yes
+  become: yes

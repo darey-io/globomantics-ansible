@@ -1,13 +1,13 @@
 ---
 # handlers file for elasticsearch-client
 
-- name: restart elasticsearch
+- name: Restart ES service
   service:
     name: elasticsearch
     state: restarted
     enabled: yes
-    
-- name: retart ES Head service
+
+- name: Start ES Head service
   service:
     name: eshead
     state: restarted

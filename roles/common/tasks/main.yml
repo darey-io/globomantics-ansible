@@ -4,5 +4,5 @@
 - name: Tune the OS
   include: configure_nodes.yml
 
-# - name: Configure Consul Agents.
-#   include: configure_consul_agent.yml
+- name: Configure Consul Agents.
+  include: configure_consul_agent.yml
