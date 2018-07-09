@@ -1,4 +1,10 @@
 ---
+- name: install packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - "{{ packages }}"
 
 - name: Create common directories across the infrastructure
   file:
@@ -11,7 +17,7 @@
     - "/etc/consul.d"
     - "/opt/consul"
     - "/opt/consul/data"
-    
+
 - name: update host files
   template:
     src: "{{ item.src }}"

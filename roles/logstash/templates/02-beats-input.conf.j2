@@ -1,0 +1,8 @@
+input {
+  beats {
+    port => 5044
+    ssl => true
+    ssl_certificate => "{{ ls_cert_dir }}/logstash-forwarder.crt"
+    ssl_key => "{{ ls_pk_dir }}/logstash-forwarder.key"
+  }
+}

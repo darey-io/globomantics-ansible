@@ -1,2 +1,14 @@
 ---
 # tasks file for kibana
+
+- name: Kibana | Setup   # Move this setup to Elasticsearch
+  include: setup-debian.yml
+  when: "'client' in group_names"  # Remove this later
+
+- name: Kibana | Build
+  include: build_kibana.yml
+  when: "'client' in group_names"
+
+- name: Kibana | Configure
+  include: configure_kibana.yml
+  when: "'client' in group_names"

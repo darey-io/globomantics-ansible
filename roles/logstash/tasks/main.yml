@@ -1,2 +1,14 @@
 ---
 # tasks file for logstash
+- name: logstash | Build
+  include: build_logstash.yml
+  when: "'client' in group_names"
+
+
+- name: logstash | Setup SSL
+  include: setup_ssl.yml
+  when: "'client' in group_names"
+
+- name: logstash | Configure
+  include: configure_logstash.yml
+  when: "'client' in group_names"

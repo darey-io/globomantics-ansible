@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+   # - common
+   # - consul-server
+   # - elasticsearch
+   - kibana
+   - logstash
