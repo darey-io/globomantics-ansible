@@ -1,0 +1,33 @@
+---
+- name: Logstash | Configure Beats Input
+  template:
+      src: "02-beats-input.conf.j2"
+      dest: "{{ ls_conf_dir }}/02-beats-input.conf"
+      owner: logstash
+      group: logstash
+      mode: 0700
+
+- name: Logstash | Filter Syslog Messages
+  template:
+      src: "10-syslog-filter.conf.j2"
+      dest: "{{ ls_conf_dir }}/10-syslog-filter.conf"
+      owner: logstash
+      group: logstash
+      mode: 0700
+
+- name: Logstash | Configure Elasticsearch Output
+  template:
+      src: "30-elasticsearch-output.conf.j2"
+      dest: "{{ ls_conf_dir }}/30-elasticsearch-output.conf.j2"
+      owner: logstash
+      group: logstash
+      mode: 0700
+
+- name: Logstash | Ensure logstash.yml and log4j2.properties exist
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    force: no
+  with_items:
+    - { src: "/etc/logstash/logstash.yml" , dest: "/usr/share/logstash/config/logstash.yml"}
+    - { src: "/etc/logstash/log4j2.properties" , dest: "/usr/share/logstash/config/log4j2.properties "}

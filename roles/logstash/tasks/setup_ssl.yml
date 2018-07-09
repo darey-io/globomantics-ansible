@@ -1,0 +1,14 @@
+---
+
+# There is a bug with using the ansible variable. Sometimes the zero index works, sometimes its 1 index.
+- lineinfile:
+    path: /etc/ssl/openssl.cnf
+    regexp: '^\[ v3_ca'
+    line: "[ v3_ca ]\nsubjectAltName = IP: {{ ansible_all_ipv4_addresses[1] }}"
+    insertafter: EOF
+
+- name: Generate SSL certificate and private key
+  shell: sudo openssl req -config /etc/ssl/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
+  args:
+    chdir: "{{ ls_tls_dir }}"
+    creates: private/logstash-forwarder.key

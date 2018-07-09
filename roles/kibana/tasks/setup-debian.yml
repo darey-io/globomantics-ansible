@@ -1,0 +1,19 @@
+---
+- name: Kibana | Ensure dependency is installed (Ubuntu).
+  apt: name=apt-transport-https state=present
+
+- name: Kibana | Add Elasticsearch apt key.
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+# - name: Kibana | Add repository.
+#   apt_repository:
+#     repo: 'd https://artifacts.elastic.co/packages/5.4/apt stable main'
+#     state: present
+#     update_cache: yes
+
+- name: ELK Stack | repository
+  shell: echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list && touch "{{ kib_config_dir}}/apt-repo.done"
+  args:
+    creates: "{{ kib_config_dir}}/apt-repo.done"

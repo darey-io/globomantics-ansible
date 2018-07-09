@@ -1,0 +1,21 @@
+---
+- name: Kibana | Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  with_items:
+    - "{{ kib_dir }}"
+    - "{{ kib_config_dir }}"
+
+
+- name: Kibana | Install
+  package: name=kibana state=present
+
+- name: Kibana | Enable Service
+  service:
+    name: kibana
+    state: started
+    enabled: yes
