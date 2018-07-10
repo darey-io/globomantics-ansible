@@ -1,7 +1,7 @@
 # Globomantics-Ansible
 This is the configuration management for our Globomantics fictional company.
 
-After Provisioning the Infrastructure with either Vagrant or Terraform, the next logical thing to so is configure the different applications and services we want running in our company. And of course secure them with different tools available depending on our use case and best practices.
+After Provisioning the Infrastructure with either Vagrant or Terraform, the next logical thing to do is configure the different applications and services we want running in our company. And of course secure them with different tools available depending on our use case and best practices.
 
 ## Getting Started
 
