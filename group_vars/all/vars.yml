@@ -2,15 +2,18 @@
 dc: "usa"
 env: dev #Specify Environment as required. "prod" "sit" "uat" etc...
 
+# Networking
+host_ip: "{{ ansible_all_ipv4_addresses[0]}}"
+client_ip: "{{ ansible_all_ipv4_addresses[1]}}"
 # Consul
 consul_config_dir: /etc/consul.d
 consul_opt_dir: /opt/consul
 consul_data_dir: /opt/consul/data
 
 # Elasticsearch
-es_host: 10.10.10.11
-es_url: "http://{{ es_host }}:9200"
-es_cluster_name: "{{ env }}-es-usa"
+es_host: "{{ client_ip }}"
+es_url: "http://{{ client_ip }}:9200"
+es_cluster_name: "usa-{{ env }}"
 es_data_dir: /data/elasticsearch
 es_head_dir: /opt/elasticsearch/elasticsearch-head
 es_minimum_master_nodes: 2
@@ -27,6 +30,7 @@ kib_config_dir: "{{ kib_dir }}/config"
 
 
 #Logstash
+ls_host: 10.10.10.11
 ls_conf_dir: /etc/logstash/conf.d
 ls_tls_dir: /etc/pki/tls
 ls_cert_dir: "{{ ls_tls_dir }}/certs"

@@ -7,7 +7,7 @@
 
 - name: logstash | Setup SSL
   include: setup_ssl.yml
-  when: "'client' in group_names"
+
 
 - name: logstash | Configure
   include: configure_logstash.yml

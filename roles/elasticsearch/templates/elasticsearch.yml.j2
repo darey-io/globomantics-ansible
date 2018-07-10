@@ -20,7 +20,7 @@ cluster.name: "{{ es_cluster_name }}"
 #
 # Use a descriptive name for the node:
 #
-node.name: {{ ansible_hostname }}
+node.name: "{{ ansible_hostname }}"
 
 {% if 'masters' in group_names %}
 node.master: true
@@ -28,7 +28,7 @@ node.data: false
 {% elif 'workers' in group_names %}
 node.data: true
 node.master: false
-http.enabled: false 
+http.enabled: false
 {% else %}
 node.data: false
 node.master: false
@@ -68,7 +68,11 @@ path.data: "{{ es_data_dir }}"
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: {{ ansible_all_ipv4_addresses[0] }}
+{% if 'client' in group_names %}
+network.host: {{ client_ip }}
+{% else %}
+network.host: {{ host_ip }}
+{% endif %}
 #
 # Set a custom port for HTTP:
 #
@@ -88,7 +92,9 @@ discovery.zen.ping.unicast.hosts: ["usa-masternode1","usa-masternode2","usa-mast
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
 discovery.zen.minimum_master_nodes: "{{ es_minimum_master_nodes }}"
-#
+#discovery.zen.ping_timeout: 5m
+
+
 # For more information, consult the zen discovery module documentation.
 #
 # ---------------------------------- Gateway -----------------------------------
@@ -105,7 +111,7 @@ gateway.recover_after_time: "{{ es_gateway_recover_after_time }}"
 # ---------------------------------- Various -----------------------------------
 {% if 'client' in group_names %}
 http.cors.enabled: true
-http.cors.allow-origin: /http://{{ ansible_all_ipv4_addresses[0] }}(:[0-9]+)?/
+http.cors.allow-origin: /http://{{ client_ip }}(:[0-9]+)?/
 #Allow CORS only from the Client Machine
 # Output Example /http://172.20.20.11(:[0-9]+)?/
 http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE

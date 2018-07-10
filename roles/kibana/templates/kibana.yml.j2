@@ -2,7 +2,12 @@
 #server.port:
 
 # The host to bind the server to.
-server.host: {{ ansible_all_ipv4_addresses[1] }} #This will default to the server this file is installed
+
+{% if 'client' in group_names %}
+server.host: {{ client_ip }}
+{% else %}
+server.host: {{ host_ip }}
+{% endif %}
 
 # If you are running kibana behind a proxy, and want to mount it at a path,
 # specify that path here. The basePath can't end in a slash.

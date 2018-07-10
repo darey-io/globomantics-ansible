@@ -1,0 +1,9 @@
+---
+# tasks file for filebeat
+- name: filebeat | Build
+  include: build_filebeat.yml
+
+
+- name: filebeat | Configure
+  include: configure_filebeat.yml
+  when: "'client' in group_names"
