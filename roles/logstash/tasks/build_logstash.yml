@@ -1,15 +1,4 @@
 ---
-- name: Logstash | Create directories
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: logstash
-    group: logstash
-    mode: 0777
-  with_items:
-    - "{{ ls_tls_dir }}"
-    - "{{ ls_cert_dir }}"
-    - "{{ ls_pk_dir }}"
 
 - name: logstash | Install
   package: name=logstash state=present

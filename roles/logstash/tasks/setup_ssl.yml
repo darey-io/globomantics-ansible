@@ -1,14 +1,42 @@
 ---
 
 # There is a bug with using the ansible variable. Sometimes the zero index works, sometimes its 1 index.
+- name: Logstash | Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  with_items:
+    - "{{ ls_tls_dir }}"
+    - "{{ ls_cert_dir }}"
+    - "{{ ls_pk_dir }}"
+
 - lineinfile:
     path: /etc/ssl/openssl.cnf
     regexp: '^\[ v3_ca'
-    line: "[ v3_ca ]\nsubjectAltName = IP: {{ ansible_all_ipv4_addresses[1] }}"
+    line: "[ v3_ca ]\nsubjectAltName = IP:{{ host_ip }}"
     insertafter: EOF
+  when: "'client' in group_names"
 
-- name: Generate SSL certificate and private key
+- name: TLS | Generate SSL certificate and private key
   shell: sudo openssl req -config /etc/ssl/openssl.cnf -x509 -days 3650 -batch -nodes -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt
   args:
     chdir: "{{ ls_tls_dir }}"
     creates: private/logstash-forwarder.key
+  when: "'client' in group_names"
+
+
+# - name: TLS | Transfer Certificate To All Servers
+#   synchronize:
+#     src: /etc/pki/tls/certs/logstash-forwarder.crt
+#     dest: /etc/pki/tls/certs/
+#     mode: pull
+#   delegate_to: usa-masternode3
+#   when: "'client' in group_names"
+
+# - name: TLS | Transfer Certificate To All Servers
+#   shell: scp /etc/pki/tls/certs/logstash-forwarder.crt {{ item }}:/tmp/logstash-forwarder.crt
+#   with_inventory_hostnames:
+#     - all

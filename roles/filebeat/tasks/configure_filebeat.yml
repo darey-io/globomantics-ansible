@@ -1,0 +1,23 @@
+---
+- name: Filebeat | Load Kibana Index Pattern
+  shell: touch index_pattern_loaded.done && /usr/share/filebeat/scripts/import_dashboards -only-index -es http://{{ es_host }}:9200
+  args:
+    chdir: /usr/share/filebeat/scripts/
+    creates: index_pattern_loaded.done
+  register: index_pattern
+
+- name: Slurp hostmapping.json
+  slurp:
+    src: "/etc/filebeat/filebeat.template.json"
+  register: filebeat_template
+
+
+- name: Filebeat | Load filebeat template to Elasticsearch
+  uri:
+    url: "http://{{ es_host }}:9200/_template/filebeat"
+    method: POST
+    body: " {{ filebeat_template.content | b64decode }}"
+    headers:
+      Content-Type: "Content-Type: application/json"
+    body_format: raw
+  when: index_pattern.changed

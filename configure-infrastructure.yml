@@ -3,8 +3,9 @@
   gather_facts: yes
   become: yes
   roles:
-   # - common
-   # - consul-server
-   # - elasticsearch
+   - common
+   - consul-server
+   - elasticsearch
    - kibana
    - logstash
+   - filebeat
