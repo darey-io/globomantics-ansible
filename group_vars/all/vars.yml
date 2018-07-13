@@ -11,6 +11,7 @@ consul_opt_dir: /opt/consul
 consul_data_dir: /opt/consul/data
 
 # Elasticsearch
+es_config_dir: /opt/elasticsearch/config
 es_host: "{{ client_ip }}"
 es_url: "http://{{ client_ip }}:9200"
 es_cluster_name: "usa-{{ env }}"
