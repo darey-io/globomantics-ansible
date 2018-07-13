@@ -8,6 +8,22 @@
   with_items:
     - "{{ es_data_dir }}"
 
+- name: ELK Stack| Add Elasticsearch apt key.
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  register: elk_apt_key
+
+# - name: Kibana | Add repository.
+#   apt_repository:
+#     repo: 'd https://artifacts.elastic.co/packages/5.4/apt stable main'
+#     state: present
+#     update_cache: yes
+
+- name: ELK Stack | repository
+  shell: echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-5.x.list
+  when: elk_apt_key.changed
+
 - name: Deploy Elastic search configuration on respective nodes
   template:
       src: "elasticsearch.yml.j2"

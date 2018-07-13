@@ -1,8 +1,8 @@
 ---
 
-- name: filebeat | Install
-  package: name=filebeat state=present
-  register: install_filebeat
+# - name: filebeat | Install
+#   package: name=filebeat state=present
+#   register: install_filebeat
 
 - name: filebeat | Load Filebeat.yml
   template:
